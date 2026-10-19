@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Private AI Chat</title>
+<meta name="description" content="Step-by-step: run your own private ChatGPT-style AI chat (Open WebUI + Ollama) on a VPS with Docker and HTTPS.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#2a313c;--fg:#f0f6fc;--muted:#9aa4b2;--accent:#ffd60a;--ink:#0d1117}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:680px;margin:0 auto;padding:44px max(16px,env(safe-area-inset-left)) 64px;display:grid;gap:22px}
+h1{font:400 clamp(32px,8vw,48px)/1.05 "Archivo Black","Arial Black",sans-serif;margin:0;text-wrap:balance}
+h1 span{background:var(--accent);color:var(--ink);padding:0 .15em;border-radius:6px}
+h2{font:400 22px/1.2 "Archivo Black","Arial Black",sans-serif;margin:18px 0 0}
+p{margin:0;color:#d5dbe3}.muted{color:var(--muted);font-size:15px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:10px}
+ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.buy{display:block;text-align:center;background:var(--accent);color:var(--ink);font:400 22px "Archivo Black","Arial Black",sans-serif;
+padding:18px;border-radius:14px;text-decoration:none}.buy.off{opacity:.55;pointer-events:none}
+.price{font:400 34px "Archivo Black","Arial Black",sans-serif;color:var(--accent)}
+.tool b{color:var(--fg)}.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+a{color:var(--accent)}
+
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;
+font:14px/1.5 ui-monospace,Consolas,monospace;color:#e6edf3;margin:8px 0}
+ol li{margin:6px 0}.step{display:grid;gap:4px}
+</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:title" content="Private AI Chat"><meta property="og:description" content="Step-by-step: run your own private ChatGPT-style AI chat (Open WebUI + Ollama) on a VPS with Docker and HTTPS."><style>nav.site{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+nav.site a{color:var(--muted);text-decoration:none}nav.site a:hover,nav.site a:focus-visible{color:var(--accent)}
+nav.site a[aria-current]{color:var(--accent);font-weight:600}
+footer.site{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px;margin-top:10px}</style></head><body><main><nav class="site" aria-label="Site"><a href="/">Tools</a><a href="/kit-en">50 Free Tools Kit</a><a href="/automation">Done-for-you</a><a href="/vps">VPS guide</a><a href="/ai-chat" aria-current="page">Private AI chat</a></nav>
+<span class="tag">Free Tool Daily</span>
+<h1>Your own <span>private AI chat</span> on a server</h1>
+<p>Open WebUI is a free, self-hosted chat interface that looks and feels like ChatGPT. Paired with Ollama, it runs open
+AI models on your own server: your chats stay on a machine you control, and you can open it from your phone or laptop.
+This guide takes about 30 minutes, only copy and paste.</p>
+<p class="muted">Disclosure: the Hostinger links on this page are referral links. If you sign up, I may earn a commission
+at no extra cost to you. Any VPS provider with Ubuntu works with these steps.</p>
+
+<h2>Be realistic first</h2>
+<div class="box"><ul>
+<li>A normal VPS has no graphics card, so models run on the CPU. Small models (1B to 3B parameters) answer at a usable
+speed; big models are slow. It will not match the top paid AI services in quality.</li>
+<li>RAM decides what you can run. Ollama's own guidance: at least <b>8 GB RAM for 7B models</b>, 16 GB for 13B.
+With <b>4 GB</b>, stick to small models such as llama3.2:1b or llama3.2:3b.</li>
+<li>Already pay for an AI API (OpenAI-compatible)? Open WebUI can use it too, and then a 2 GB server is enough.</li>
+</ul><a class="buy" href="/go/hostinger" target="_blank" rel="noopener sponsored">Get a VPS on Hostinger (referral link)</a></div>
+
+<h2>1. Prepare the server</h2>
+<div class="box step"><p>Follow steps 1 to 4 of our <a href="/vps" style="color:var(--accent)">self-hosting guide</a>
+(choose Ubuntu, connect with SSH, install Docker, turn on the firewall). Then come back here.</p></div>
+
+<h2>2. Start Open WebUI with Ollama built in</h2>
+<div class="box step"><p>The official image with the <b>:ollama</b> tag bundles both in one container. This version is
+bound to 127.0.0.1 so it is reachable only through the HTTPS proxy in step 3:</p><pre><code>docker run -d --name open-webui --restart always   -p 127.0.0.1:3000:8080   -v ollama:/root/.ollama   -v open-webui:/app/backend/data   ghcr.io/open-webui/open-webui:ollama</code></pre>
+<p>Your chats live in the <b>open-webui</b> volume and the downloaded models in the <b>ollama</b> volume, so they survive
+updates and reboots.</p></div>
+
+<h2>3. Put HTTPS in front</h2>
+<div class="box step"><p>Point a subdomain (for example ai.example.com) to the server IP with an A record. Install Caddy
+as in the <a href="/vps" style="color:var(--accent)">main guide</a> and set <b>/etc/caddy/Caddyfile</b> to:</p>
+<pre><code>ai.example.com {
+    reverse_proxy 127.0.0.1:3000
+}</code></pre>
+<pre><code>systemctl reload caddy</code></pre></div>
+
+<h2>4. Create your account right away</h2>
+<div class="box step"><p>Open https://ai.example.com. The <b>first account created becomes the administrator</b>, so do
+this immediately after the site goes live. In the admin settings you can keep new sign-ups disabled or require approval.</p></div>
+
+<h2>5. Download a model and chat</h2>
+<div class="box step"><p>In Open WebUI, open the model selector or the admin settings for models and pull a small model by
+name, for example <b>llama3.2:3b</b> (about 2 GB) or <b>llama3.2:1b</b> for 4 GB servers. When the download ends, pick it
+and start chatting. You can also upload documents and ask questions about them.</p></div>
+
+<h2>6. Keep it healthy</h2>
+<div class="box"><ul>
+<li><b>Updates</b>: <code>docker pull ghcr.io/open-webui/open-webui:ollama</code>, then remove and re-run the container
+with the same command (the volumes keep your data).</li>
+<li><b>Disk</b>: each model takes 1 to 5 GB or more; delete models you do not use.</li>
+<li><b>Backups</b>: provider snapshots, or back up the two Docker volumes.</li>
+</ul></div>
+
+<h2>More free tools</h2>
+<div class="box"><p>Our <a href="/kit-en" style="color:var(--accent)">50 Free Tools Kit</a> (PDF, US$ 4.99) lists
+50 free alternatives to paid apps, including AI tools you can run yourself.</p><a class="buy" href="/go/hostinger" target="_blank" rel="noopener sponsored">Get a VPS on Hostinger (referral link)</a></div>
+<p class="muted">Open WebUI and Ollama are independent open-source projects; this guide is not affiliated with them.
+Free Tool Daily: one free tool every day. <a href="./" style="color:var(--accent)">All tools</a>.</p>
+<footer class="site">Free Tool Daily: one free, open-source tool every day. <a href="https://www.instagram.com/freetooldailyia/">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595636181283">Facebook</a></footer></main></body></html>

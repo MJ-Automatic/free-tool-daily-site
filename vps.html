@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Self-Host on a VPS</title>
+<meta name="description" content="Step-by-step: run free open-source tools 24/7 on your own VPS with Docker, a firewall and HTTPS.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#2a313c;--fg:#f0f6fc;--muted:#9aa4b2;--accent:#ffd60a;--ink:#0d1117}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:680px;margin:0 auto;padding:44px max(16px,env(safe-area-inset-left)) 64px;display:grid;gap:22px}
+h1{font:400 clamp(32px,8vw,48px)/1.05 "Archivo Black","Arial Black",sans-serif;margin:0;text-wrap:balance}
+h1 span{background:var(--accent);color:var(--ink);padding:0 .15em;border-radius:6px}
+h2{font:400 22px/1.2 "Archivo Black","Arial Black",sans-serif;margin:18px 0 0}
+p{margin:0;color:#d5dbe3}.muted{color:var(--muted);font-size:15px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:10px}
+ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.buy{display:block;text-align:center;background:var(--accent);color:var(--ink);font:400 22px "Archivo Black","Arial Black",sans-serif;
+padding:18px;border-radius:14px;text-decoration:none}.buy.off{opacity:.55;pointer-events:none}
+.price{font:400 34px "Archivo Black","Arial Black",sans-serif;color:var(--accent)}
+.tool b{color:var(--fg)}.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+a{color:var(--accent)}
+
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;
+font:14px/1.5 ui-monospace,Consolas,monospace;color:#e6edf3;margin:8px 0}
+ol li{margin:6px 0}.step{display:grid;gap:4px}
+</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:title" content="Self-Host on a VPS"><meta property="og:description" content="Step-by-step: run free open-source tools 24/7 on your own VPS with Docker, a firewall and HTTPS."><style>nav.site{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+nav.site a{color:var(--muted);text-decoration:none}nav.site a:hover,nav.site a:focus-visible{color:var(--accent)}
+nav.site a[aria-current]{color:var(--accent);font-weight:600}
+footer.site{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px;margin-top:10px}</style></head><body><main><nav class="site" aria-label="Site"><a href="/">Tools</a><a href="/kit-en">50 Free Tools Kit</a><a href="/automation">Done-for-you</a><a href="/vps" aria-current="page">VPS guide</a><a href="/ai-chat">Private AI chat</a></nav>
+<span class="tag">Free Tool Daily</span>
+<h1>Run free tools <span>24/7</span> on your own server</h1>
+<p>Many tools from our videos are open source and self-hostable: automation (n8n), photo backup (Immich), AI chat
+front-ends and more. On your laptop they stop when you close the lid. On a VPS (a small rented cloud server) they run all
+the time and you can open them from any device. This guide takes about 30 minutes and needs no coding, only copy and paste.</p>
+<p class="muted">Disclosure: the Hostinger links on this page are referral links. If you sign up, I may earn a commission
+at no extra cost to you. Any VPS provider with Ubuntu works with these steps.</p>
+
+<h2>1. Pick a server</h2>
+<div class="box"><ul>
+<li><b>2 GB RAM</b>: enough for one or two light tools (n8n, a website, a password manager).</li>
+<li><b>4 GB RAM or more</b>: photo libraries, several tools at once, or small AI models.</li>
+<li>Choose <b>Ubuntu</b> (LTS version) as the operating system and the data center closest to you.</li>
+</ul><a class="buy" href="/go/hostinger" target="_blank" rel="noopener sponsored">Get a VPS on Hostinger (referral link)</a></div>
+
+<h2>2. Connect with SSH</h2>
+<div class="box step"><p>Your provider shows the server IP and the root password or SSH key. On Windows, macOS or Linux
+open a terminal and run (replace the IP):</p><pre><code>ssh root@203.0.113.10</code></pre>
+<p>Then update the system:</p><pre><code>apt update &amp;&amp; apt upgrade -y</code></pre></div>
+
+<h2>3. Install Docker</h2>
+<div class="box step"><p>Almost every self-hosted tool ships as a Docker image. The official install script:</p>
+<pre><code>curl -fsSL https://get.docker.com | sh</code></pre>
+<p>Check that it works:</p><pre><code>docker run --rm hello-world</code></pre></div>
+
+<h2>4. Turn on the firewall</h2>
+<div class="box step"><p>Allow only SSH and web traffic, and keep everything else closed:</p>
+<pre><code>ufw allow OpenSSH
+ufw allow 80,443/tcp
+ufw enable</code></pre>
+<p class="muted">Note: ports published by Docker can bypass ufw rules. Bind tools to 127.0.0.1 (as in step 5) and
+expose them only through the HTTPS proxy in step 6.</p></div>
+
+<h2>5. Run a tool (example: n8n)</h2>
+<div class="box step"><p>n8n is a free, self-hostable alternative to Zapier and Make. This keeps your data in a Docker
+volume and restarts the tool automatically after a reboot:</p>
+<pre><code>docker volume create n8n_data
+docker run -d --name n8n --restart unless-stopped \
+  -p 127.0.0.1:5678:5678 \
+  -e N8N_HOST=n8n.example.com -e N8N_PROTOCOL=https \
+  -e WEBHOOK_URL=https://n8n.example.com/ \
+  -v n8n_data:/home/node/.n8n \
+  docker.n8n.io/n8nio/n8n</code></pre>
+<p>Other tools work the same way: copy the <b>docker run</b> or <b>docker compose</b> command from the tool's official
+README and follow it. Always use the official image named in the README.</p></div>
+
+<h2>6. Add a domain and HTTPS</h2>
+<div class="box step"><p>Point a domain or subdomain (for example n8n.example.com) to the server IP with an A record at
+your domain registrar. Then install Caddy, a web server that gets free HTTPS certificates automatically
+(this command works on Ubuntu 24.04; for older versions follow caddyserver.com/docs/install):</p>
+<pre><code>apt install -y caddy</code></pre>
+<p>Edit <b>/etc/caddy/Caddyfile</b> so it contains only:</p>
+<pre><code>n8n.example.com {
+    reverse_proxy 127.0.0.1:5678
+}</code></pre>
+<p>Reload and open https://n8n.example.com in your browser:</p><pre><code>systemctl reload caddy</code></pre></div>
+
+<h2>7. Keep it healthy</h2>
+<div class="box"><ul>
+<li><b>Updates</b>: <code>docker pull docker.n8n.io/n8nio/n8n</code>, then remove and re-run the container (data stays in the volume).</li>
+<li><b>Backups</b>: turn on your provider's snapshots or back up the Docker volumes regularly.</li>
+<li><b>Security</b>: use strong passwords or SSH keys, and install only tools you trust from their official source.</li>
+</ul></div>
+
+<h2>Next: your own private AI chat</h2>
+<div class="box"><p>Run a ChatGPT-style chat on this same server with Open WebUI and Ollama: <a href="/ai-chat" style="color:var(--accent)">step-by-step AI chat guide</a>.</p></div>
+
+<h2>Want the tools themselves?</h2>
+<div class="box"><p>Our <a href="/kit-en" style="color:var(--accent)">50 Free Tools Kit</a> (PDF, US$ 4.99) lists
+50 free alternatives to paid apps, and marks which ones you can run on a server like this one.</p><a class="buy" href="/go/hostinger" target="_blank" rel="noopener sponsored">Get a VPS on Hostinger (referral link)</a></div>
+<p class="muted">Free Tool Daily: one free, open-source tool every day. <a href="./" style="color:var(--accent)">All tools</a>.</p>
+<footer class="site">Free Tool Daily: one free, open-source tool every day. <a href="https://www.instagram.com/freetooldailyia/">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595636181283">Facebook</a></footer></main></body></html>
