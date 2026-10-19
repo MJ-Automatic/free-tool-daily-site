@@ -1,38 +1,62 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Free Tool Daily</title><meta name="description" content="One free, open-source tool every day.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;600&display=swap">
 <style>
-:root{--bg:#0d1117;--card:#161b22;--line:#2a313c;--fg:#f0f6fc;--muted:#9aa4b2;--accent:#ffd60a;--ink:#0d1117;
---display:"Archivo Black","Arial Black",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;color-scheme:dark}
+:root{--bg:#ffffff;--subtle:#f6f8fa;--border:#d0d7de;--fg:#1f2328;--muted:#59636e;--link:#0969da;
+--btn:#1f883d;--btn-hover:#1a7f37;--btn-fg:#ffffff;--label:#ddf4ff;--label-fg:#0550ae;--warn:#fff8c5;
+--line:var(--border);--accent:var(--link);--ink:#ffffff;color-scheme:light dark;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;
+--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1117;--subtle:#151b23;--border:#3d444d;--fg:#f0f6fc;--muted:#9198a1;
+--link:#4493f8;--btn:#238636;--btn-hover:#29903b;--label:#0c2d6b;--label-fg:#9ecbff;--warn:#2e2a1a;--ink:#0d1117}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--body)}
-main{max-width:560px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left)) 56px;display:grid;gap:14px}
-header{display:grid;gap:6px;margin-bottom:10px}
-h1{font-family:var(--display);font-size:clamp(30px,8vw,42px);line-height:1;margin:0}
-h1 span{background:var(--accent);color:var(--ink);padding:0 .2em;border-radius:6px}
-.sub{color:var(--muted);margin:0}
-a.card{display:grid;gap:4px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:inherit;text-decoration:none}
-a.card:hover,a.card:focus-visible{border-color:var(--accent);outline:none}
-.card b{font-size:18px}
-.card small{color:var(--muted)}
-.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
-a.host{background:var(--accent);color:var(--ink);border-color:var(--accent)}
-a.host small{color:#3b3200}
-h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
-footer{color:var(--muted);font-size:13px;margin-top:18px}
-</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:title" content="Free Tool Daily"><meta property="og:description" content="One free, open-source tool every day."><style>nav.site{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
-nav.site a{color:var(--muted);text-decoration:none}nav.site a:hover,nav.site a:focus-visible{color:var(--accent)}
-nav.site a[aria-current]{color:var(--accent);font-weight:600}
-footer.site{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px;margin-top:10px}</style></head><body><main><nav class="site" aria-label="Site"><a href="/" aria-current="page">Tools</a><a href="/kit-en">50 Free Tools Kit</a><a href="/automation">Done-for-you</a><a href="/vps">VPS guide</a><a href="/ai-chat">Private AI chat</a></nav>
-<header><h1>Free Tool <span>Daily</span></h1>
-<p class="sub">One free, open-source tool every day. Newest first.</p></header>
-<a class="card" href="/go/game" target="_blank" rel="noopener"><span class="tag">New game</span><b>Play Deep Drill Idle free</b><small>A new free browser game every day on Play Vibe Coded. No download, no sign-up.</small></a>
-<a class="card host" href="/kit-en"><b>The 50 Free Tools Kit (PDF, US$ 4.99)</b><small>50 free tools that replace paid subscriptions: AI, voice, image, video, automation and more, with official links and a VPS bonus guide.</small></a>
-<a class="card" href="/automation"><span class="tag">Done-for-you</span><b>Want a robot like this for your business?</b><small>I set up daily short videos for your Facebook and Instagram. Launch price US$ 99 for the first 3 clients.</small></a>
-<a class="card host" href="/vps"><b>Self-host any of these tools 24/7</b><small>Step-by-step VPS guide (Docker, firewall, HTTPS). Contains Hostinger referral links: I may earn a commission at no extra cost to you.</small></a>
-<h2>Tools from our videos</h2>
-<a class="card" href="https://github.com/danielgatis/rembg" target="_blank" rel="noopener"><span class="tag">2026-10-19</span><b>rembg</b><small>rembg is a free and open source tool (MIT license) that removes image backgrounds</small></a><a class="card" href="https://github.com/Stirling-Tools/Stirling-PDF" target="_blank" rel="noopener"><span class="tag">2026-10-18</span><b>Stirling-PDF</b><small>Stirling PDF describes itself as an open-source PDF editing platform you can run as a desktop app, in the browser, or on your own servers wi</small></a><a class="card" href="https://github.com/immich-app/immich" target="_blank" rel="noopener"><span class="tag">2026-10-18</span><b>immich</b><small>Immich describes itself as a high performance self-hosted photo and video management solution</small></a><a class="card" href="https://github.com/upscayl/upscayl" target="_blank" rel="noopener"><span class="tag">2026-10-18</span><b>upscayl</b><small>Upscayl is a free and open source AI image upscaler for Linux, macOS and Windows</small></a><a class="card" href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener"><span class="tag">2026-10-17</span><b>n8n</b><small>n8n is a fair-code platform to build AI agents and workflow automations</small></a><a class="card" href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener"><span class="tag">2026-10-17</span><b>open-webui</b><small>Open WebUI is a self-hosted AI platform with a chat interface, built to run entirely offline</small></a><a class="card" href="https://github.com/ARahim3/DigUp" target="_blank" rel="noopener"><span class="tag">2026-10-17</span><b>DigUp</b><small>DigUp (MIT license) searches the files on your computer by what&#x27;s in them, using Google DeepMind&#x27;s open EmbeddingGemma 2 model</small></a><a class="card" href="https://github.com/cathrynlavery/diagram-design" target="_blank" rel="noopener"><span class="tag">2026-10-16</span><b>diagram-design</b><small>Diagram Design (MIT license) is an agent skill that draws diagrams as one self-contained HTML + SVG file</small></a><a class="card" href="/go/game" target="_blank" rel="noopener"><span class="tag">2026-10-16</span><b>Deep Drill Idle</b><small>I had AI build a complete idle game: code, game design, balancing and play-testing with a robot player (pixel art from free asset packs)</small></a><a class="card" href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener"><span class="tag">2026-10-16</span><b>hyperframes</b><small>HyperFrames by HeyGen: open-source (Apache-2.0) framework that turns HTML, CSS, media and animations into MP4 videos</small></a><a class="card" href="https://github.com/storytold/artcraft" target="_blank" rel="noopener"><span class="tag">2026-10-16</span><b>artcraft</b><small>ArtCraft: open-source (MIT or Apache-2.0) desktop app for AI image and video creation</small></a><a class="card" href="https://github.com/MadsLorentzen/ai-job-search" target="_blank" rel="noopener"><span class="tag">2026-10-16</span><b>ai-job-search</b><small>AI Job Search: open-source (MIT) job application framework built on Claude Code</small></a><a class="card" href="https://github.com/DuarteSantos8/openGym" target="_blank" rel="noopener"><span class="tag">2026-10-15</span><b>openGym</b><small>openGym: free self-hosted workout tracker</small></a><a class="card" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener"><span class="tag">2026-10-15</span><b>caveman</b><small>Caveman: open-source add-on that makes AI coding agents answer short and read less</small></a><a class="card" href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noopener"><span class="tag">2026-10-15</span><b>VoiceStudio</b><small>VoiceStudio: open-source voice cloning, dubbing, transcription &amp; audiobooks — fully local, 646 languages.</small></a>
-<footer>Follow <a href="https://www.instagram.com/freetooldailyia/" style="color:var(--accent)">@freetooldailyia</a> on Instagram ·
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans)}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+header.bar{border-bottom:1px solid var(--border);background:var(--subtle)}
+header.bar .in{max-width:780px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+header.bar .brand{display:flex;align-items:center;gap:8px;color:var(--fg);font-weight:600}
+header.bar .brand svg{width:22px;height:22px;border-radius:5px}
+header.bar nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14px}
+header.bar nav a{color:var(--muted)}header.bar nav a:hover{color:var(--link);text-decoration:none}
+header.bar nav a[aria-current]{color:var(--fg);font-weight:600}
+main{max-width:780px;margin:0 auto;padding:28px 16px 48px;display:grid;gap:16px}
+main>header{display:grid;gap:4px}
+h1{font-size:clamp(24px,5vw,30px);line-height:1.25;font-weight:600;margin:0;letter-spacing:-.01em}
+h1 span{background:none;color:inherit;padding:0}
+h2{font-size:19px;font-weight:600;margin:18px 0 0;padding-bottom:6px;border-bottom:1px solid var(--border)}
+p{margin:0}.muted,.sub{color:var(--muted);font-size:14px}.sub{font-size:15px}
+.tag{display:inline-block;justify-self:start;font-size:12px;font-weight:500;line-height:18px;padding:0 8px;border:1px solid var(--border);
+border-radius:2em;color:var(--muted);background:var(--bg)}
+.box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 16px;display:grid;gap:10px}
+.box>.price+.muted{margin-top:-6px}
+ul,ol{margin:0;padding-left:22px;display:grid;gap:4px}
+.buy{display:inline-flex;justify-content:center;align-items:center;justify-self:start;background:var(--btn);color:var(--btn-fg);
+font:600 15px var(--sans);padding:9px 18px;border-radius:6px;border:1px solid rgba(31,35,40,.15);text-decoration:none;
+box-shadow:0 1px 0 rgba(31,35,40,.1)}
+.buy:hover{background:var(--btn-hover);text-decoration:none}.buy.off{opacity:.55;pointer-events:none}
+.price{font-size:26px;font-weight:600;line-height:1.2}
+.tool b{color:var(--fg)}.tool .tag{margin-bottom:2px}
+code,pre{font-family:var(--mono);font-size:13px}
+pre{background:var(--subtle);border:1px solid var(--border);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:6px 0;line-height:1.45}
+.list{border:1px solid var(--border);border-radius:6px;overflow:hidden}
+a.card{display:grid;gap:2px;padding:12px 16px;background:var(--bg);color:inherit;text-decoration:none;border-top:1px solid var(--border)}
+.list a.card:first-child{border-top:0}
+a.card:hover{background:var(--subtle);text-decoration:none}
+a.card b{color:var(--link);font-weight:600;font-size:15px}
+a.card small{color:var(--muted);font-size:14px}
+a.card .tag{margin-bottom:4px}
+a.card.host{background:var(--subtle)}a.card.host:hover{background:var(--bg)}
+.meta{color:var(--muted);font-size:12px;font-family:var(--mono)}
+footer,footer.site{color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:14px;margin-top:12px}
+footer a{color:var(--link)}
+</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:title" content="Free Tool Daily"><meta property="og:description" content="One free, open-source tool every day."></head><body><header class="bar"><div class="in"><a class="brand" href="/"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#1f2328"/>
+<text x="32" y="42" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-weight="700" font-size="26" fill="#ffffff">FT</text></svg>Free Tool Daily</a><nav aria-label="Site"><a href="/" aria-current="page">Tools</a><a href="/kit-en">Kit</a><a href="/automation">Service</a><a href="/vps">VPS guide</a><a href="/ai-chat">AI chat guide</a></nav></div></header><main>
+<header><h1>Free Tool Daily</h1>
+<p class="sub">One free, open-source tool from GitHub every day, from our short videos. Newest first.</p></header>
+<div class="list"><a class="card" href="/go/game" target="_blank" rel="noopener"><span class="tag">Game</span><b>Play Deep Drill Idle free</b><small>A new free browser game made with AI on Play Vibe Coded. No download, no sign-up.</small></a><a class="card" href="/kit-en"><span class="tag">PDF · US$ 4.99</span><b>The 50 Free Tools Kit</b><small>50 free tools that replace paid subscriptions: AI, voice, image, video, automation and more, with official links and a VPS bonus guide.</small></a><a class="card" href="/automation"><span class="tag">Service · from US$ 99</span><b>A robot like this one for your business</b><small>Daily short videos on your Facebook and Instagram, set up in your own accounts.</small></a><a class="card" href="/vps"><span class="tag">Guide</span><b>Self-host any of these tools 24/7</b><small>Step-by-step VPS guide (Docker, firewall, HTTPS). Contains referral links: I may earn a commission at no extra cost to you.</small></a></div>
+<h2>Tools from our videos <span class="muted">(15)</span></h2>
+<div class="list"><a class="card" href="https://github.com/danielgatis/rembg" target="_blank" rel="noopener"><b>danielgatis/rembg</b><small>rembg is a free and open source tool (MIT license) that removes image backgrounds</small><span class="meta">2026-10-19 · 25,000+ stars on GitHub</span></a><a class="card" href="https://github.com/Stirling-Tools/Stirling-PDF" target="_blank" rel="noopener"><b>Stirling-Tools/Stirling-PDF</b><small>Stirling PDF describes itself as an open-source PDF editing platform you can run as a desktop app, in the browser, or on your own servers with a...</small><span class="meta">2026-10-18 · 94,000+ stars on GitHub</span></a><a class="card" href="https://github.com/immich-app/immich" target="_blank" rel="noopener"><b>immich-app/immich</b><small>Immich describes itself as a high performance self-hosted photo and video management solution</small><span class="meta">2026-10-18 · 116,000+ stars on GitHub</span></a><a class="card" href="https://github.com/upscayl/upscayl" target="_blank" rel="noopener"><b>upscayl/upscayl</b><small>Upscayl is a free and open source AI image upscaler for Linux, macOS and Windows</small><span class="meta">2026-10-18 · 50,000+ stars on GitHub</span></a><a class="card" href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener"><b>n8n-io/n8n</b><small>n8n is a fair-code platform to build AI agents and workflow automations</small><span class="meta">2026-10-17 · 200,000+ stars on GitHub</span></a><a class="card" href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener"><b>open-webui/open-webui</b><small>Open WebUI is a self-hosted AI platform with a chat interface, built to run entirely offline</small><span class="meta">2026-10-17 · 155,000+ stars on GitHub</span></a><a class="card" href="https://github.com/ARahim3/DigUp" target="_blank" rel="noopener"><b>ARahim3/DigUp</b><small>DigUp (MIT license) searches the files on your computer by what&#x27;s in them, using Google DeepMind&#x27;s open EmbeddingGemma 2 model</small><span class="meta">2026-10-17 · 4,400+ stars on GitHub</span></a><a class="card" href="https://github.com/cathrynlavery/diagram-design" target="_blank" rel="noopener"><b>cathrynlavery/diagram-design</b><small>Diagram Design (MIT license) is an agent skill that draws diagrams as one self-contained HTML + SVG file</small><span class="meta">2026-10-16 · 56,000+ stars on GitHub</span></a><a class="card" href="/go/game" target="_blank" rel="noopener"><b>Deep Drill Idle</b><small>I had AI build a complete idle game: code, game design, balancing and play-testing with a robot player (pixel art from free asset packs)</small><span class="meta">2026-10-16</span></a><a class="card" href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener"><b>heygen-com/hyperframes</b><small>HyperFrames by HeyGen: open-source (Apache-2.0) framework that turns HTML, CSS, media and animations into MP4 videos</small><span class="meta">2026-10-16 · 65,000+ stars on GitHub</span></a><a class="card" href="https://github.com/storytold/artcraft" target="_blank" rel="noopener"><b>storytold/artcraft</b><small>ArtCraft: open-source (MIT or Apache-2.0) desktop app for AI image and video creation</small><span class="meta">2026-10-16 · +22,319 stars this week</span></a><a class="card" href="https://github.com/MadsLorentzen/ai-job-search" target="_blank" rel="noopener"><b>MadsLorentzen/ai-job-search</b><small>AI Job Search: open-source (MIT) job application framework built on Claude Code</small><span class="meta">2026-10-16 · +879 stars today</span></a><a class="card" href="https://github.com/DuarteSantos8/openGym" target="_blank" rel="noopener"><b>DuarteSantos8/openGym</b><small>openGym: free self-hosted workout tracker</small><span class="meta">2026-10-15 · +5,132 stars this week</span></a><a class="card" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener"><b>JuliusBrussee/caveman</b><small>Caveman: open-source add-on that makes AI coding agents answer short and read less</small><span class="meta">2026-10-15 · +530 stars today</span></a><a class="card" href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noopener"><b>debpalash/VoiceStudio</b><small>VoiceStudio: open-source voice cloning, dubbing, transcription &amp; audiobooks — fully local, 646 languages.</small><span class="meta">2026-10-15 · +3,027 stars today</span></a></div>
+<footer>Follow <a href="https://www.instagram.com/freetooldailyia/">@freetooldailyia</a> on Instagram ·
 Comment LINK on any video to get this page in your DMs.</footer>
-<footer class="site">Free Tool Daily: one free, open-source tool every day. <a href="https://www.instagram.com/freetooldailyia/">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61595636181283">Facebook</a></footer></main></body></html>
+</main></body></html>
